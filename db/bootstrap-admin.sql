@@ -1,0 +1,7 @@
+-- Promote first admin (replace email before running)
+-- Example:
+-- insert into public.user_roles (user_id, role)
+-- select id, 'admin'::public.app_role
+-- from auth.users
+-- where email = 'you@example.com'
+-- on conflict do nothing;
