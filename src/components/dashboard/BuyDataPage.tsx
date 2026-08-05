@@ -313,9 +313,7 @@ export function BuyDataPage() {
                     >
                       <p className="font-heading text-lg font-bold text-foreground">{b.package_size}</p>
                       <p className="mt-1 text-sm text-primary">{fmtGHS(Number(b.reseller_price))}</p>
-                      <p className="mt-1 text-[11px] text-muted-foreground">
-                        Retail {fmtGHS(Number(b.public_price))} · {b.validity}
-                      </p>
+                      <p className="mt-1 text-[11px] text-muted-foreground">{b.validity}</p>
                     </button>
                   ))}
                 </div>

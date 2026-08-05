@@ -54,7 +54,7 @@ export function AdminUserDetailPage({ userId }: { userId: string }) {
     }[]
   >([]);
   const [packages, setPackages] = useState<
-    { network: string; package_size: string; base_price: number; profit: number; sell_price: number; is_active: boolean }[]
+    { id: string; network: string; package_size: string; reseller_price: number; validity: string; is_unavailable: boolean }[]
   >([]);
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
@@ -83,10 +83,10 @@ export function AdminUserDetailPage({ userId }: { userId: string }) {
         .eq("reseller_id", userId)
         .order("created_at", { ascending: false }),
       supabase
-        .from("reseller_packages")
-        .select("network, package_size, base_price, profit, sell_price, is_active")
-        .eq("reseller_id", userId)
-        .order("network"),
+        .from("packages")
+        .select("id, network, package_size, reseller_price, validity, is_unavailable")
+        .order("network")
+        .order("reseller_price"),
     ]);
 
     setProfile((p.data as Profile) ?? null);
@@ -467,27 +467,26 @@ export function AdminUserDetailPage({ userId }: { userId: string }) {
 
       {tab === "packages" ? (
         <GlassCard variant="strong">
+          <p className="mb-4 text-xs text-muted-foreground">
+            Platform prices (same for this reseller on dashboard and API). Manage them under Admin →
+            Packages.
+          </p>
           {packages.length === 0 ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">
-              No custom API package pricing set.
-            </p>
+            <p className="py-8 text-center text-sm text-muted-foreground">No packages configured.</p>
           ) : (
             <div className="space-y-2">
               {packages.map((p) => (
                 <div
-                  key={`${p.network}-${p.package_size}`}
+                  key={p.id}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border/60 px-3 py-2.5 text-sm"
                 >
                   <p>
                     {p.network} {p.package_size}{" "}
-                    {!p.is_active ? (
-                      <span className="text-[11px] text-muted-foreground">(inactive)</span>
+                    {p.is_unavailable ? (
+                      <span className="text-[11px] text-destructive">(off)</span>
                     ) : null}
                   </p>
-                  <p className="text-muted-foreground">
-                    Base {fmtGHS(Number(p.base_price))} + {fmtGHS(Number(p.profit))} ={" "}
-                    <span className="font-semibold text-primary">{fmtGHS(Number(p.sell_price))}</span>
-                  </p>
+                  <p className="font-semibold text-primary">{fmtGHS(Number(p.reseller_price))}</p>
                 </div>
               ))}
             </div>

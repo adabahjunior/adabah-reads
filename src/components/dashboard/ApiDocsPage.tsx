@@ -29,10 +29,9 @@ type EndpointId = "balance" | "packages" | "place-order" | "list-orders";
 type ApiPackage = {
   network: string;
   package_size: string;
+  price?: number;
   sell_price?: number;
   reseller_price?: number;
-  base_price?: number;
-  profit?: number;
   validity?: string;
 };
 
@@ -64,7 +63,7 @@ const ENDPOINTS: {
     method: "GET",
     path: "/api/v1/packages",
     title: "List packages",
-    blurb: "MTN, Telecel & AirtelTigo bundles with your sell prices.",
+    blurb: "MTN, Telecel & AirtelTigo bundles at the admin-set price.",
     icon: Package,
   },
   {
@@ -98,7 +97,7 @@ function pretty(value: unknown) {
 }
 
 function packagePrice(pkg: ApiPackage) {
-  return Number(pkg.sell_price ?? pkg.reseller_price ?? pkg.base_price ?? 0);
+  return Number(pkg.price ?? pkg.sell_price ?? pkg.reseller_price ?? 0);
 }
 
 export function ApiDocsPage() {
@@ -506,16 +505,11 @@ export function ApiDocsPage() {
                       ) : null}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Sell price:{" "}
+                      Price:{" "}
                       <span className="font-semibold text-primary">
                         {fmtGHS(packagePrice(selectedPkg))}
-                      </span>
-                      {typeof selectedPkg.base_price === "number" ? (
-                        <> · wallet cost {fmtGHS(Number(selectedPkg.base_price))}</>
-                      ) : null}
-                      {typeof selectedPkg.profit === "number" && selectedPkg.profit > 0 ? (
-                        <> · profit {fmtGHS(selectedPkg.profit)}</>
-                      ) : null}
+                      </span>{" "}
+                      (same on dashboard &amp; API)
                     </p>
                   </div>
                 ) : null}
