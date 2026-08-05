@@ -1,0 +1,3 @@
+/** Public Supabase project credentials (anon/publishable). Safe for the browser; RLS still applies. */
+export const SUPABASE_URL = "https://wpsfzixglighzdcyzajj.supabase.co";
+export const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indwc2Z6aXhnbGlnaHpkY3l6YWpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NzY0MjgsImV4cCI6MjEwMTM1MjQyOH0.uWhUJuhJu_FY2tNSsZeGdEdqNb4dx4_iysfAGTKeh0M";

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "../integrations/supabase/public-env";
 
 function env(name: string): string {
   const fromImport =
@@ -8,15 +9,16 @@ function env(name: string): string {
   return (fromImport || process.env[name] || "").trim();
 }
 
-const url = env("VITE_SUPABASE_URL") || env("SUPABASE_URL");
+const url = env("VITE_SUPABASE_URL") || env("SUPABASE_URL") || SUPABASE_URL;
 const anon =
   env("VITE_SUPABASE_ANON_KEY") ||
   env("VITE_SUPABASE_PUBLISHABLE_KEY") ||
-  env("SUPABASE_ANON_KEY");
+  env("SUPABASE_ANON_KEY") ||
+  SUPABASE_PUBLISHABLE_KEY;
 
 /** Server-side anon client used only to call security-definer API RPCs. */
 export function supabaseApi() {
-  return createClient(url || "https://placeholder.supabase.co", anon || "placeholder", {
+  return createClient(url, anon, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }

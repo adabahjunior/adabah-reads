@@ -1,14 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/integrations/supabase/public-env";
 
-const url = import.meta.env["VITE_SUPABASE_URL"] as string | undefined;
-const key = (import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
-  import.meta.env["VITE_SUPABASE_ANON_KEY"]) as string | undefined;
+const url = (import.meta.env["VITE_SUPABASE_URL"] as string | undefined)?.trim() || SUPABASE_URL;
+const key =
+  (import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] as string | undefined)?.trim() ||
+  (import.meta.env["VITE_SUPABASE_ANON_KEY"] as string | undefined)?.trim() ||
+  SUPABASE_PUBLISHABLE_KEY;
 
-if (!url || !key) {
-  console.warn("Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY");
-}
-
-export const supabase = createClient(url ?? "https://placeholder.supabase.co", key ?? "placeholder", {
+export const supabase = createClient(url, key, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
