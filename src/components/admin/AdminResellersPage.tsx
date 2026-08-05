@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ChevronRight, Loader2, Search } from "lucide-react";
 import { toast } from "sonner";
 import { GlassCard } from "@/components/GlassCard";
@@ -131,8 +131,7 @@ export function AdminResellersPage() {
           filtered.map((r) => (
             <GlassCard key={r.id} variant="strong" className="space-y-3">
               <Link
-                to="/admin/resellers/$userId"
-                params={{ userId: r.id }}
+                to={`/admin/resellers/${r.id}`}
                 className="flex flex-wrap items-start justify-between gap-3 rounded-lg transition-colors hover:bg-muted/30"
               >
                 <div>

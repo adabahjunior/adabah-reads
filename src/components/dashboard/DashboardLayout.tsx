@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   ShoppingCart,
@@ -38,18 +38,18 @@ const nav = [
 
 export function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { pathname } = useLocation();
   const { signOut, loading, isAuthenticated, hasRole } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) return;
     if (!isAuthenticated) {
-      void navigate({ to: "/auth" });
+      void navigate("/auth");
       return;
     }
     if (!hasRole("reseller") && !hasRole("admin")) {
-      void navigate({ to: "/auth" });
+      void navigate("/auth");
     }
   }, [loading, isAuthenticated, hasRole, navigate]);
 
@@ -125,7 +125,7 @@ export function DashboardLayout() {
           <button
             type="button"
             onClick={() => {
-              void signOut().then(() => navigate({ to: "/auth" }));
+              void signOut().then(() => navigate("/auth"));
             }}
             className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm text-sidebar-foreground/75 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
           >

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Loader2, Minus, Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { GlassCard } from "@/components/GlassCard";
@@ -161,7 +161,7 @@ export function AdminTopupsPage() {
               Debit
             </Button>
             <Button variant="outline" asChild>
-              <Link to="/admin/resellers/$userId" params={{ userId: found.id }}>
+              <Link to={`/admin/resellers/${found.id}`}>
                 Open full account
               </Link>
             </Button>

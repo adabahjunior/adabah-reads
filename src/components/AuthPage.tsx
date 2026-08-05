@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Eye, EyeOff, Package } from "lucide-react";
 import { toast } from "sonner";
 import { GlassCard } from "@/components/GlassCard";
@@ -70,8 +70,8 @@ export function AuthPage() {
 
   useEffect(() => {
     if (loading || !isAuthenticated) return;
-    if (hasRole("admin")) void navigate({ to: "/admin" });
-    else void navigate({ to: "/dashboard" });
+    if (hasRole("admin")) void navigate("/admin");
+    else void navigate("/dashboard");
   }, [loading, isAuthenticated, hasRole, navigate]);
 
   const submit = async (event: React.FormEvent) => {
@@ -83,12 +83,12 @@ export function AuthPage() {
         if (password !== confirmPassword) throw new Error("Passwords do not match.");
         await signUp(email.trim(), password, { full_name: fullName.trim() });
         toast.success("Account created — welcome to BundleMart!");
-        void navigate({ to: "/dashboard" });
+        void navigate("/dashboard");
       } else {
         const roles = await signIn(email.trim(), password);
         toast.success("Welcome back!");
-        if (roles.includes("admin")) void navigate({ to: "/admin" });
-        else void navigate({ to: "/dashboard" });
+        if (roles.includes("admin")) void navigate("/admin");
+        else void navigate("/dashboard");
       }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Authentication failed.");

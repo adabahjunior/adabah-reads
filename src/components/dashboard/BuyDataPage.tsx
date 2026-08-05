@@ -90,7 +90,7 @@ export function BuyDataPage() {
     }
     const rows = buildBulkRows(phones).map((row): BulkResult => {
       if (!row.network) {
-        return { ...row, status: "skipped", message: row.error };
+        return { ...row, status: "skipped", message: row.error ?? "Unknown network prefix" };
       }
       const pkg = findPackage(row.network, packageSize);
       if (!pkg) {
@@ -179,7 +179,7 @@ export function BuyDataPage() {
 
     for (let i = 0; i < next.length; i++) {
       const row = next[i];
-      if (row.status !== "pending" || !row.network || row.price == null) continue;
+      if (!row || row.status !== "pending" || !row.network || row.price == null) continue;
 
       try {
         const { error } = await supabase.rpc("create_wallet_order", {

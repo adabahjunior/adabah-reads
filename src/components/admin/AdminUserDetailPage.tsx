@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { ArrowLeft, Copy, KeyRound, Loader2, Minus, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { GlassCard } from "@/components/GlassCard";

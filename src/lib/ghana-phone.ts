@@ -87,7 +87,9 @@ export async function phonesFromSpreadsheetFile(file: File): Promise<string[]> {
     const XLSX = await import("xlsx");
     const buffer = await file.arrayBuffer();
     const workbook = XLSX.read(buffer, { type: "array" });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const firstSheetName = workbook.SheetNames[0];
+    if (!firstSheetName) return [];
+    const sheet = workbook.Sheets[firstSheetName];
     if (!sheet) return [];
     const rows = XLSX.utils.sheet_to_json<(string | number)[]>(sheet, {
       header: 1,

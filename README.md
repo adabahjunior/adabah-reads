@@ -1,6 +1,6 @@
 # BundleMart
 
-Data reselling platform (SwiftData-style reseller dashboard) built with Vite + TanStack Start.
+Data reselling platform (SwiftData-style reseller dashboard) built as a Vite + React SPA with React Router.
 
 ## Local
 
@@ -15,8 +15,4 @@ Demo account: `reseller@bundlemart.gh` / `demo1234`
 
 ## Deploy to Vercel
 
-Connect the repo in Vercel (build: `npm run build`). Nitro auto-uses the Vercel preset on Vercel, or set:
-
-```sh
-NITRO_PRESET=vercel npm run build
-```
+Connect the repo in Vercel with build command `npm run build`. `vercel.json` rewrites non-API routes to the SPA entry point, while `/api/v1/*` is served by Vercel functions.
